@@ -1,0 +1,38 @@
+/*
+Thesis
+"Attacks regarding online tests and ensuring the integrity of results based on the example of TTÜ admission test"
+Eva Maria Veitmaa, 155408IAPB
+Tallinn University of Technology
+2018
+*/
+
+body {
+    position: relative;
+}
+
+video, canvas {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    opacity: 1;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+#target {
+    position: absolute;
+    z-index: 99;
+    color: red;
+    margin: 0;
+    padding: 0;
+    left: 50%;
+    top: 30%;
+    font-size: 48px;
+}
+
+#gazeBox {
+    border: 1px solid black ;
+}
+
+#clicker {
+    z-index: 999;
+}

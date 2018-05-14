@@ -1,0 +1,180 @@
+<!--
+Thesis
+"Attacks regarding online tests and ensuring the integrity of results based on the example of TTÜ admission test"
+Eva Maria Veitmaa, 155408IAPB
+Tallinn University of Technology
+2018
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Basic page needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Invigilation</title>
+    <meta name="description"
+          content="Thesis: Attacks regarding online tests and ensuring the integrity of results based on the example of TTÜ admission test">
+    <meta name="author" content="Eva Maria Veitmaa">
+
+    <!-- Style
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/style.css">
+
+    <!-- Scripts
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="tracking.js-master/build/tracking-min.js"></script>
+    <script src="tracking.js-master/build/data/face-min.js"></script>
+
+</head>
+
+
+<body>
+
+<h3 id="target">X</h3>
+
+<div class="container-fluid">
+
+    <!-- Several faces -->
+    <div id="severalFacesModal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1"
+         role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please make sure you are alone</h5>
+                </div>
+                <div class="modal-body">
+                    <p>We identified another face in your video frame.<br>Please make sure you
+                        are
+                        the
+                        only person in front of the screen.</p>
+                    <p>This warning might also be triggered by a colourful or detailed background. To avoid seeing
+                        this
+                        message again, move to somewhere with a plain background.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal">I am alone now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration -->
+    <div id="registrationModal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1"
+         role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please enter your credentials</h5>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="candidateEmail">Email address</label>
+                            <input type="email" class="form-control" id="candidateEmail"
+                                   aria-describedby="loginHelp" placeholder="Email" required>
+                            <small id="loginHelp" class="form-text"></small>
+                        </div>
+                        <button id="loginBtn" type="button" class="btn btn-primary">Log in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kairos test buttons -->
+    <div class="row">
+        <button id="kairosDetect" class="btn btn-sm btn-primary" type="button">kairos detect</button>
+        <button id="kairosEnroll" class="btn btn-sm btn-primary" type="button">kairos enroll</button>
+        <button id="kairosRecognise" class="btn btn-sm btn-primary" type="button">kairos recognise</button>
+        <button id="kairosVerify" class="btn btn-sm btn-primary" type="button">kairos verify</button>
+        <button id="kairosGalleryView" class="btn btn-sm btn-primary" type="button">kairos gallery view</button>
+        <button id="kairosGalleryRemove" class="btn btn-sm btn-primary" type="button">kairos gallery remove</button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Informative table -->
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th scope="row">Candidate</th>
+                    <td id="candidateId">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Speaking</th>
+                    <td id="speakingStatus">false</td>
+                </tr>
+                <tr>
+                    <th scope="row">Faces (tracking.js)</th>
+                    <td id="numOfFacesTrackingJs">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Faces (Kairos)</th>
+                    <td id="numOfFacesKairos">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Feedback (Kairos)</th>
+                    <td id="feedbackMsg">-</td>
+                </tr>
+                <tr>
+                    <th scope="row">Gender (Kairos)</th>
+                    <td id="genderKairos">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Age (Kairos)</th>
+                    <td id="ageKairos">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Race (Kairos)</th>
+                    <td id="raceKairos">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Glasses (Kairos)</th>
+                    <td id="glassesKairos">unknown</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Gaze calibration area -->
+        <div id="gazeBox" class="col">
+            <button id="clicker" class="btn btn-sm btn-danger" type="button">Click</button>
+        </div>
+    </div>
+
+    <!-- Web cam feed -->
+    <video id="video" class="video-feed" width="320" height="240" preload autoplay loop muted></video>
+    <canvas id="canvas" width="320" height="240"></canvas>
+
+    <div class="camera">
+        <video id="kairos-video">Video stream not available.</video>
+    </div>
+    <canvas id="kairos-canvas"></canvas>
+
+</div>
+
+<!-- Scripts
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<script src="xlabs-demo-master/xlabs-demo-master/api/xlabs.js" type="text/javascript"></script>
+<script src="Kairos-SDK-Javascript-master/kairos.js" type="text/javascript"></script>
+
+<script src="scripts/other.js" type="text/javascript"></script>
+<script src="scripts/face-detection.js" type="text/javascript"></script>
+<script src="scripts/gaze-tracking.js" type="text/javascript"></script>
+<script src="scripts/kairos.js" type="text/javascript"></script>
+<script src="scripts/speech.js" type="text/javascript"></script>
+
+</body>
+</html>
