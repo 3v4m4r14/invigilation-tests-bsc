@@ -49,8 +49,9 @@ Temporary Items
 # IntelliJ
 .idea
 
-# Drive
+# Others
 .tmp.drivedownload
 code/.idea/workspace.xml
 kairos.JPG
 ~$IGINAL.docx
+config.js

@@ -6,7 +6,9 @@ Tallinn University of Technology
 2018
 */
 
-var kairos = new Kairos('', '');
+var appId = config.APP_ID;
+var apiKey = config.KEY;
+var kairos = new Kairos(appId, apiKey);
 
 var candidate = {
     'id': null,
