@@ -1,6 +1,8 @@
 # invigilation-tests-bsc
 
-Application for testing likely components of an invigilation system for online tests.
+Application for testing likely components of an invigilation system for online tests. 
+
+NB! Does not work online due to removed API keys!
 
 ## Getting Started
 
