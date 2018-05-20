@@ -15,7 +15,7 @@ Speech recognition functionality is currently available in Google Chrome web bro
 ### Kairos app ID and API keys
 
 For security purposes author's personal Kairos app ID and API key have been removed from this remote repository.
-If you wish to use Kairos API, you need to create a configuration file config.js in the following format:
+If you wish to use Kairos API, you need your personal API key which you can get [HERE](https://developer.kairos.com/signup?plan_ids[]=2357355666521). If you have the key, create a configuration file config.js in the following format:
 
 ```
 var config = {
